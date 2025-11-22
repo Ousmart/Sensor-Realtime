@@ -1,10 +1,10 @@
 import random, time
-from flask import Flask, jsonify
+from flask import Flask
 from flask_socketio import SocketIO
 from threading import Thread
 
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*")
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode="gevent")  # async_mode ต้องเป็น gevent
 
 def sensor_loop():
     while True:
@@ -12,16 +12,13 @@ def sensor_loop():
             "temperature": round(random.uniform(20, 40), 2),
             "pressure": round(random.uniform(1.0, 1.5), 3)
         }
-        
-        # Send data over socketio using emit
         socketio.emit("sensor_update", data)
         time.sleep(1)
-        
+
 Thread(target=sensor_loop, daemon=True).start()
 
 @app.route("/api/status")
 def status():
     return {"status": "running"}
 
-# if __name__ == "__main__":
-#     socketio.run(app, host="0.0.0.0", port=10000)
+# ❌ ไม่ต้องมี socketio.run()
