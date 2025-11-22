@@ -4,7 +4,8 @@ from flask_socketio import SocketIO
 from threading import Thread
 
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*", async_mode="gevent")  # async_mode ต้องเป็น gevent
+socketio = SocketIO(app, cors_allowed_origins="*")  # หรือใส่เฉพาะ URL React
+# async_mode ต้องเป็น gevent
 
 def sensor_loop():
     while True:
