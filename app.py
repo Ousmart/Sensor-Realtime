@@ -23,5 +23,5 @@ Thread(target=sensor_loop, daemon=True).start()
 def status():
     return {"status": "running"}
 
-if __name__ == "__main__":
-    socketio.run(app, host="0.0.0.0", port=10000)
+# if __name__ == "__main__":
+#     socketio.run(app, host="0.0.0.0", port=10000)
